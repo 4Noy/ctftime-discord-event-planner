@@ -9,43 +9,46 @@
   outputs = { self, nixpkgs, flake-utils, ... }:
     flake-utils.lib.eachDefaultSystem (system:
       let
-        pkgs = import nixpkgs {
-          inherit system;
-        };
-
-        pythonEnv = pkgs.python3.withPackages (ps: with ps; [
-          fastapi
-          uvicorn
-          httpx
-          python-dotenv
-          asyncpg
-          psycopg2
-          supabase-py
-          discord-py
-        ]);
-
+        pkgs = import nixpkgs { inherit system; };
         nodePackages = pkgs.nodejs_24;
-
-      in {
+        python = pkgs.python3;
+        virtualenv = pkgs.python3Packages.virtualenv;
+      in
+      {
         devShell = pkgs.mkShell {
           name = "discord-bot-env";
 
           packages = with pkgs; [
+            python
+            virtualenv
             nodePackages
-            pythonEnv
+            yarn
             docker
             git
             openssl
             pkg-config
-            # Optional:
-            # firefox  # For testing extension manually in dev
+            python.pkgs.venvShellHook
           ];
 
           shellHook = ''
+            if [ ! -d .venv ]; then
+              echo "Creating Python virtual environment in .venv with virtualenv"
+              virtualenv .venv
+            fi
+
+            source .venv/bin/activate
+
+            if ! pip show discord.py supabase >/dev/null 2>&1; then
+              echo "Installing Python dependencies from requirements.txt"
+              pip install --upgrade pip
+              pip install -r requirements.txt
+            fi
+
             echo "Welcome to the dev shell!"
             echo "Node version: $(node --version)"
+            echo "Yarn version: $(yarn --version)"
+            echo "Docker version: $(docker --version)"
             echo "Python version: $(python --version)"
-            echo "Docker version: $(docker --version || echo 'Docker not available')"
           '';
         };
       }

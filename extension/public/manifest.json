@@ -1,0 +1,19 @@
+{
+  "name": "ctftime-event-fetcher",
+  "description": "Gather informations about ctftime events when the user want's to log and event and send it to the discord bot.",
+  "version": "1.0.0",
+  "manifest_version": 2,
+  "homepage_url": "https://github.com/4Noy/ctftime-discord-event-planner",
+  "browser_action": {
+    "default_popup": "index.html",
+    "default_title": "ctftime-event-fetcher",
+    "default_icon": {
+      "48": "logo48.png",
+      "96": "logo96.png"
+    }
+  },
+  "icons": {
+    "48": "logo48.png",
+    "96": "logo96.png"
+  }
+}

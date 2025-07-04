@@ -1,6 +1,15 @@
-.env
-__pycache__
+# Base
 ~*
 .cache
 *.tmp
 flake.lock
+.env
+
+# Discord bot
+.venv
+__pycache__
+
+# Extension
+yarn.lock
+node_modules
+bin

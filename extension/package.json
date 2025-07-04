@@ -1,0 +1,19 @@
+{
+  "name": "ctftime-event-fetcher",
+  "version": "1.0.0",
+  "description": "Gather informations about ctftime events when the user want's to log and event and send it to the discord bot.",
+  "main": "index.js",
+  "repository": "https://github.com/4Noy/ctftime-discord-event-planner",
+  "author": "Noy.",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@types/node": "^24.0.10",
+    "typescript": "^5.8.3"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.2"
+  }
+}
